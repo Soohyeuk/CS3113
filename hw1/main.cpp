@@ -42,6 +42,13 @@ constexpr float FISH_AMP_X = 200.0f;
 constexpr float FISH_AMP_Y = 100.0f;
 constexpr float FISH_SPEED = 2.0f;
 
+constexpr float JELLY_AMP_X   = 50.0f;
+constexpr float JELLY_FREQ    = 3.0f;
+
+constexpr float BUBBLE_OFFSET_X = 40.0f;
+constexpr float BUBBLE_OFFSET_Y = -40.0f;
+
+
 // Global Variables
 AppStatus gAppStatus     = RUNNING;
 Direction gDirection = RIGHT; 
@@ -62,8 +69,6 @@ constexpr char JELLYFISH[]  = "assets/jellyfish.png";
 constexpr char BG[]  = "assets/Sinky_Sub_BG.png";
 constexpr char RUINS[]  = "assets/Sinky_Sub_CloseRockkelp.png";
 constexpr char FLOOR[]  = "assets/Sinky_Sub_Floor.png";
-
-
 
 Texture2D gBubble,
            gFish,
@@ -116,39 +121,29 @@ void update()
     // --- FISH ---
     // x = A * sin(t)
     // y = B * sin(2*t) * 0.5 (or cos)
-    constexpr float FISH_AMP_X = 200.0f;
-    constexpr float FISH_AMP_Y = 100.0f;
-    constexpr float FISH_SPEED = 2.0f;
-
     gFishPos.x = ORIGIN.x + FISH_AMP_X * sin(gPulseTime * FISH_SPEED);
     gFishPos.y = ORIGIN.y + FISH_AMP_Y * sin(gPulseTime * FISH_SPEED * 2.0f) * 0.5f;
 
 
     // --- JELLYFISH ---
-    // Vertical Sine Wave with Ping-Pong
-    static float jellySpeedY = -1.0f; // Start moving up
-    constexpr float JELLY_AMP_X   = 50.0f;
-    constexpr float JELLY_FREQ    = 3.0f;
-    
+    //vertical Sine Wave with Ping-Pong
+    static float jellySpeedY = -1.0f;
     gJellyfishPos.y += jellySpeedY;
     gJellyfishPos.x = (SCREEN_WIDTH / 6.0f) + JELLY_AMP_X * sin(gPulseTime * JELLY_FREQ);
 
-    // Bounce off top and bottom
+    //top and bottom bound
     if (gJellyfishPos.y <= 0.0f) {
         gJellyfishPos.y = 0.0f;
-        jellySpeedY *= -1.0f; // Go down
+        jellySpeedY *= -1.0f;
     }
     else if (gJellyfishPos.y >= SCREEN_HEIGHT) {
         gJellyfishPos.y = SCREEN_HEIGHT;
-        jellySpeedY *= -1.0f; // Go up
+        jellySpeedY *= -1.0f; 
     }
 
 
     // --- BUBBLE ---
-    // Top right of jellyfish
-    constexpr float BUBBLE_OFFSET_X = 40.0f;
-    constexpr float BUBBLE_OFFSET_Y = -40.0f;
-
+    //top right of jellyfish
     gBubblePos.x = gJellyfishPos.x + BUBBLE_OFFSET_X;
     gBubblePos.y = gJellyfishPos.y + BUBBLE_OFFSET_Y; 
 
@@ -235,7 +230,6 @@ void render() {
         static_cast<float>(gBubble.height)
     };
     
-    // Oscillate scale around 0.15f
     float bubbleScaleFactor = 0.15f + 0.05f * sin(gPulseTime * 5.0f);
     
     Rectangle bubbleDest = {
