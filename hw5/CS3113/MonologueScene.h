@@ -3,9 +3,6 @@
 #ifndef MONOLOGUE_SCENE_H
 #define MONOLOGUE_SCENE_H
 
-// A reusable dialog-box scene. Call `configure(lines, afterSceneID)` before
-// switching to it — on the final Enter press it sets nextSceneID to
-// `afterSceneID` so the caller transitions to whatever scene should follow.
 class MonologueScene : public Scene
 {
 private:

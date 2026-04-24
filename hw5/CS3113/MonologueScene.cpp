@@ -49,12 +49,9 @@ void MonologueScene::render()
 {
     ClearBackground(BLACK);
 
-    // Dialog box (bottom third-ish of the screen)
     const int boxX = 40, boxY = 340, boxW = 920, boxH = 220;
     DrawRectangle(boxX, boxY, boxW, boxH, Color{ 18, 18, 28, 245 });
     DrawRectangleLines(boxX, boxY, boxW, boxH, Color{ 210, 210, 230, 255 });
-
-    // Character portrait on the left
     const int portraitSize = 180;
     const int portraitX    = boxX + 20;
     const int portraitY    = boxY + (boxH - portraitSize) / 2;
